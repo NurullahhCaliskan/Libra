@@ -40,6 +40,7 @@ class Engine():
 
             productDf.to_csv('out.csv', index=False)
             print("bitti")
+            time.sleep(3600)
 
 
 def getMainCategoriesList():
