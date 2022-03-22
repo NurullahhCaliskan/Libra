@@ -47,8 +47,8 @@ class Engine():
             info["password"] = dfPw.loc[1].to_list()[0]
 
             data = {}
-            data['category'] = dfPr.loc[0].to_list()
-            data['main_category'] = dfPr.loc[1].to_list()
+            data['main_category'] = dfPr.loc[0].to_list()
+            data['category'] = dfPr.loc[1].to_list()
             data['price_rate'] = dfPr.loc[2].to_list()
 
             auth = Auth()
