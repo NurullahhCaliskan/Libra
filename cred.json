@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "volt-shop-price-rates",
+  "private_key_id": "4f4ff8550ceb6571dc2f046852a3a6883bbfa31b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDTvd/5k9iLDw7z\nQn2pmLYCi5aqNd1+3lyx8VNzEitFOh4012CCAp7t4lvYiioqrQdWjYG0VFlul9HN\nJBzYoqrdmn0oobvSfHMDA8WxSUzj8+ebSDCLRAABtfcFZgO90PudGzdmeBl23Xzl\nN9royRRcGsS8iynmaGJl9dSEg+Yl0IVJIieDxZsYY6ig9+QY3hM1o7xCuCxuzFIB\nOKDSXjubIiJulVwppbThjVA7d4TBHi+Ui0j9P9vQlTAFQIq1bEzta13BsmGxwE/E\n5xfw/fKS2pIpjvFNAEC+l+5V6iNGyMfrzYTrGs+SMrB25VRe5f2rg4ZITADNsRjN\n5tYuZdvxAgMBAAECggEAJM8wXZHPJjWC8tUPRWlv0rdzhLmCfOipEqISUMHK1ekJ\nkUQT2eYcvNwJ/XXfaLXVvb0x3CiBt5Ea/t+VSC/XJlkSAvtCzI+n6tFAD9bfUA15\nqOv+zGcQ3TtF6yFV6yymYSR3GBAu1RQh/zMbkjZKnMxmgSRsL0rcOD9pJ3RKkS4C\nzvSaEH8K4cWk1oHY73GYOA062uOtQiTrOEpYEvwmlZAmc72d8X7UubmMkl1GKZFa\nzuxyJX+9pkoWuf/AqUagcnB3++Nfgh3wQ6Juau9LMIb0wVL/qbUr20XrOPC6cNiy\nUQZ8B6lPluOij3W+dwSCSayUyPWrk7DV4/TwBoDEpQKBgQDw0owINxGyp8AqdZ34\ndEmRBVDzhR1ZL6jmVI8n70bl093xquBs7YisvwWsrgrlChwMtyOSuWWCqvULU4Hl\nA/ZFR7ciyqPCmgQR3tVDFD5BdVGVBXbFmu4mxWNLjyM1G9OVDWzy1NC7eAUFm9+v\n6nebKuoQ7/Le9xnRt3F+C8Ll9wKBgQDhFiLfnhvj7X4Fkd293XZLR7oaXwoSDduZ\nN2D0GtWCAXJu6zUWcTzG3qRZSo6nbPVR42Bc28CSZlKIJO/0M9j+Y1/p4rD69hZ4\n9ZSsOno2Rrgf2cq3k9o0v2U/6XME3zsk2ooSRlhL3j77S7ly0vZ6c4CeaHLqZZSR\nd8eP6xKzVwKBgQCdowScwAdqrZoBcRolr2EUd6lkrkbmwWbK1qEan+sFuCi474SW\naOolQakiPo7NHE/+FsdHXOpQnT1n25LUaUKEWQxMzt5hHNX7KKTqks6ppHTxmjED\n6oVnhZ+Yryp5sixOjgo57gpwHIEVCdJjYZRHUtECoz6UqqUQ/QZiXqqGQwKBgQC6\nH0PXBTaq0sdSc7uYNHiM51LMW6pII41itJhHQakrR2cIsRXE6P4ItDHSZARyDXcN\nr6cPIeerJ1E3otOIaxcTw7ib/ge6faM3glrdz70fBHtcWwt1oZzd4SYoIzIo5S5S\n2yMw2VpJ4gzSX1uJx0hpGPlSA6yChlzDrPgn2YotIQKBgHaH59Gf4juYzlvcyKbd\nmAohs3jiNDiJ8yklEqd3/lfDdJPFPmsAyCyibUP/TSczGwqX+Q0iuzkLtf0mgZ2l\n5aoQgIVpnb/GqcNBuudShtNht5HDIooqkI70XnFNv/z/b7/tThbiXqYsmbeYnpyu\nfSQksR1+HlNZPoz5s9lx/QLa\n-----END PRIVATE KEY-----\n",
+  "client_email": "karlo-726@volt-shop-price-rates.iam.gserviceaccount.com",
+  "client_id": "103562593783508405671",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/karlo-726%40volt-shop-price-rates.iam.gserviceaccount.com"
+}

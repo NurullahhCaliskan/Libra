@@ -2,10 +2,11 @@ import json
 import requests
 import pandas as pd
 import time
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 info = {
     "email": "info@volt-zonnepanelen.nl",
-    "password": "jiwRuh-8sanza-joqkaj",
     "login-url": "https://shop.libra.energy/shop-api/login",
     "authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NDQ2NjE1NDUsImV4cCI6MTY0NDY2MjQ0NSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiaW5mb0B2b2x0LXpvbm5lcGFuZWxlbi5ubCJ9.ERm7Q5-IYoD14EJGesKl88lZzPS4DebZTjwMVRz_aTAWk3FsOCxdcaAuNELojOBsZYx_Sa4V-369gKSPPTbxn7CG0HSln-zQl8Dgvbrp61L6uB3ahfw17Mj2OHD0pi1jyYRsg17dU3as0DcTW9mY0foB0vNAUzQiccV3RlEhwTwe4Cb4JU5NY0cBMZSEp2jVP_qNgZ6yfi9fhAI-S5EN8LmR-m0z87gKRKShM5jEseCq0dHbFwi_cU4NnT9lWokAOQPMWX0BFtN4UnejZL7VYK2Y6jxz5a2oDYysDrAHVzwY__hKmLaYy-wGZ1uVXpgydZpKeHq2y5dWxzRyKeaCaRNu6eStS4JIYp4rhiEkCiI6YLWdG9K68c-dKyafXF8y5Mlne1-7Rjwu_ZeXMwMWDMjB9P938S5LE279ZQly_iBKrbH-d3c3gy6X59TkcEs-5zpIiD2_m9r5sD_R9TFrQdyQnzV3x4LFba2ZvHscwy281GKUWQmj86CljsVotmlQgGHWImWDCpuDLsm9NLAyzIKlMsyvOj_Hda7PKQgInU7pLnXiBXoD7LxTCk1AKpBhYxFr5q7jVey9WFg0NPwntdhHyXuOWu0O5_7ARYUHuV1RdwAqny_sjEl1AvIVHnxc8QjdrKkw5cbk1ZD9qQezu2aMWuOu4AkJuFFqof2pAMo",
     "main_url": "https://shop.libra.energy",
@@ -15,20 +16,43 @@ info = {
     "stock_api": "https://shop.libra.energy/shop-api/stock"
 }
 
+
 class Test():
     def myTest(self):
         print('test')
+
 
 class Engine():
     def generateCSV(self):
         while True:
             print("start generating2")
-            auth = Auth()
 
+            scope = ["https://spreadsheets.google.com/feeds",
+                     'https://www.googleapis.com/auth/spreadsheets',
+                     "https://www.googleapis.com/auth/drive.file",
+                     "https://www.googleapis.com/auth/drive"]
+
+            creds = ServiceAccountCredentials.from_json_keyfile_name("./cred.json", scope)
+            client = gspread.authorize(creds)
+
+            sheet = client.open("Volt Shop price rates")
+
+            wsPr = sheet.worksheet("Price-rate")
+            dfPr = pd.DataFrame(wsPr.get_all_values())
+
+            wsPw = sheet.worksheet("Password")
+            dfPw = pd.DataFrame(wsPw.get_all_values())
+
+
+            info["password"] = dfPw.loc[1].to_list()[0]
+
+            data = {}
+            data['category'] = dfPr.loc[0].to_list()
+            data['main_category'] = dfPr.loc[1].to_list()
+            data['price_rate'] = dfPr.loc[2].to_list()
+
+            auth = Auth()
             Auth.authToken = auth.login()
-            data = {'main_category': ['solar', 'solar', 'solar', 'solar', 'solar', 'energieopslag', 'energieopslag', 'energieopslag', 'e-mobility', 'e-mobility', 'e-mobility', 'kabels', 'kabels', 'kabels', 'kabels'],
-                    'category': ['zonnepanelen', 'omvormers', 'montagematerialen', 'accessoires', 'garanties', 'hybride-omvormers', 'accu-s-en-batterijen', 'accessoires', 'laadpalen', 'accessoires', 'configuraties', 'connectoren', 'kabelmanagement', 'kabels', 'overige'],
-                    'price_rate': [1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3]}
 
             categoriesDf = pd.DataFrame(data)
 
@@ -117,8 +141,14 @@ class CollectProductUrls:
 
     def collectAllOfLinks(self, df, stockDf):
         unique_arr = df["main_category"].unique()
-        columns = ["ID", "Categories", "Code", "Name", "SKU", "Description", "Short description", "attributes", "Images", "Published", "Brand", "Published", "Datasheet", "Stock", "In stock?", "Sales price", "Regular price",
-                   "Merk", "Lengte", "Breedte", "Module-rendement", "Vermogen", "MPP-spanning", "Kabellengte", "MPP vermogen (Maximum Power Point)", "Hoogte", "Nullastspanning", "Max. systeemspanning", "Kortsluitstroom", "Aantal bypassdiodes", "Aantal cellen", "Gewicht", "MPP-stroom", "Met aansluitkabel", "Met frame", "Kleur frame", "Celmateriaal", "AC-nom. uitgangsvermogen", "WiFi", "Aantal MPP trackers", "Ingebouwde batterij", "Ethernet", "Netbewaking", "Type", "Serie"
+        columns = ["ID", "Categories", "Code", "Name", "SKU", "Description", "Short description", "attributes",
+                   "Images", "Published", "Brand", "Published", "Datasheet", "Stock", "In stock?", "Sales price",
+                   "Regular price",
+                   "Merk", "Lengte", "Breedte", "Module-rendement", "Vermogen", "MPP-spanning", "Kabellengte",
+                   "MPP vermogen (Maximum Power Point)", "Hoogte", "Nullastspanning", "Max. systeemspanning",
+                   "Kortsluitstroom", "Aantal bypassdiodes", "Aantal cellen", "Gewicht", "MPP-stroom",
+                   "Met aansluitkabel", "Met frame", "Kleur frame", "Celmateriaal", "AC-nom. uitgangsvermogen", "WiFi",
+                   "Aantal MPP trackers", "Ingebouwde batterij", "Ethernet", "Netbewaking", "Type", "Serie"
                    ]
         productDf = pd.DataFrame(columns=columns)
 
@@ -164,7 +194,8 @@ class CollectProductUrls:
         self.idCounter += 1
         # category
         try:
-            myList.append(CollectProductUrls.formatterCategory(self, product["taxons"]["main"].split("/")[0]) + ", " + CollectProductUrls.formatterCategory(self, product["taxons"]["main"].split("/")[1]))
+            myList.append(CollectProductUrls.formatterCategory(self, product["taxons"]["main"].split("/")[
+                0]) + ", " + CollectProductUrls.formatterCategory(self, product["taxons"]["main"].split("/")[1]))
         except:
             myList.append(None)
 
@@ -196,7 +227,8 @@ class CollectProductUrls:
         try:
             # product["datasheet"][0]
             if "datasheet" in product and product["datasheet"][0]:
-                myList.append(product["shortDescription"] + "<br></br><a href=\"" + product["datasheet"][0] + "\">Datasheet</a>  <br></br> ")
+                myList.append(product["shortDescription"] + "<br></br><a href=\"" + product["datasheet"][
+                    0] + "\">Datasheet</a>  <br></br> ")
             else:
                 myList.append(product["shortDescription"])
         except:
@@ -671,4 +703,3 @@ class CollectProductUrls:
             return categoryJson[key]
         except:
             return key
-
