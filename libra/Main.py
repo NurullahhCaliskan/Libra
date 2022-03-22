@@ -43,7 +43,6 @@ class Engine():
             wsPw = sheet.worksheet("Password")
             dfPw = pd.DataFrame(wsPw.get_all_values())
 
-
             info["password"] = dfPw.loc[1].to_list()[0]
 
             data = {}
@@ -293,7 +292,7 @@ class CollectProductUrls:
             record = df.loc[df['category'] == product["taxons"]["main"].split("/")[1]]
 
             priceRate = record.loc[record.index.values.tolist()[0]]["price_rate"]
-            newPrice = (value / 100) * priceRate
+            newPrice = (float(value) / float(100)) * float(priceRate)
             myList.append(round(newPrice, 2))
         except:
             myList.append(None)
@@ -307,7 +306,7 @@ class CollectProductUrls:
             record = df.loc[df['category'] == product["taxons"]["main"].split("/")[1]]
 
             priceRate = record.loc[record.index.values.tolist()[0]]["price_rate"]
-            newPrice = (value / 100) * priceRate
+            newPrice = (float(value) / float(100)) * float(priceRate)
             myList.append(round(newPrice, 2))
         except:
             myList.append(None)
