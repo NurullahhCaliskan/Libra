@@ -252,6 +252,7 @@ class CollectProductUrls:
         except:
             myList.append(None)
 
+
         # stock
         try:
             if myList[-1] and str(myList[-1]) and str(myList[-1]) != "" and str(myList[-1]) != "0":
