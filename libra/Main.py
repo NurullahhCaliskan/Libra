@@ -145,17 +145,25 @@ class CollectProductUrls:
         return productDf
 
     def getQuantityBySku(self, sku):
-        response = requests.get("https://shop.libra.energy/shop-api/stock?sku[]=" + sku)
+        try:
+            response = requests.get("https://shop.libra.energy/shop-api/stock?sku[]=" + sku)
 
-        responseAsStr = str(response.content, 'utf-8')
-        responseAsStr = responseAsStr.replace("\n", "")
-        responseAsStr = responseAsStr.replace("\r", "")
-        responseAsStr = responseAsStr.replace("\t", "")
-        responseAsStr = responseAsStr.replace("  ", " ")
+            responseAsStr = str(response.content, 'utf-8')
+            responseAsStr = responseAsStr.replace("\n", "")
+            responseAsStr = responseAsStr.replace("\r", "")
+            responseAsStr = responseAsStr.replace("\t", "")
+            responseAsStr = responseAsStr.replace("  ", " ")
 
-        productList = json.loads(responseAsStr)
-        quantity = productList[0]["availableFrom"]["quantity"]
-        return quantity
+            productList = json.loads(responseAsStr)
+
+            lastDateIndex = ''
+            for dateIndex in productList[0]["available"]:
+                lastDateIndex = dateIndex
+
+            return productList[0]["available"][lastDateIndex]
+
+        except:
+            return None
 
     def setArrayFromRecord(self, df, product, stockDf):
         myList = []
